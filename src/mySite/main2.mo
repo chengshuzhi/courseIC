@@ -1,24 +1,24 @@
 import Debug "mo:base/Debug";
 import Nat "mo:base/Nat";
+import Array "mo:base/Array";
+import Text "mo:base/Text";
+import Iter "mo:base/Iter";
+import List "mo:base/List";
+import Int "mo:base/Int";
 
 actor {
-    func fib(n: Nat): Nat {
-        let x = if (n <= 1) 1 else {
-        let y = fib(n -1);
-            fib(n -2) + y
-        }
-    };
 
-    public func fibonacci(x: Nat): async Nat {
-        fib(x)
-    };
-
-    //TODO quicksort : [var Int] -> ()
-
-    func quicksort(sortArray: [var Int]) {
+    public func qsort(sortArray: [Int]) : async [Int] {
         var low = 0;
-        var high = sortArray.size() -1;
-        quickSort (sortArray, low, high);
+        var high = 0 ;
+        var mutableArray: [var Int] = Array.thaw(sortArray);
+        if (mutableArray.size() >= 1) {
+            high := mutableArray.size() -1;
+            quickSort (mutableArray, low, high);
+        } else {
+            return sortArray;
+        };
+        return Array.freeze(mutableArray);
     };
 
     func quickSort (sortArray: [var Int], low: Nat, high: Nat) {
